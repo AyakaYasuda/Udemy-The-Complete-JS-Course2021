@@ -131,9 +131,50 @@ for (const [i, el] of menu.entries()) {
   console.log(`${i + 1}: ${el}`);
 }
 
+// optional chaining
+console.log(restaurant.openingHours.mon?.open);
+console.log(restaurant.openingHours.fri?.open);
+
+// an example using optional chaining in the real world
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+for (const day of days) {
+  // console.log(day);
+  const open = restaurant.openingHours[day]?.open ?? 'closed'; // set default
+  console.log(`On ${day}, we are open at ${open}`);
+}
+
+// optional chaining on fuction
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'this method does not exist');
+
+// optional chaining on array
+const users = [{ name: 'Jonas', email: 'hello@jonas.com' }];
+console.log(users[0]?.name ?? 'empty');
+
+// looping an object
+// in case of property names
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+let openStr = `We are open on ${properties.length} days:`;
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+console.log(openStr);
+
+// in case of property values
+const values = Object.values(openingHours);
+console.log(values);
+
+// in case of the entire objest (both key and values)
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+for (const [day, { open, close }] of entries) {
+  console.log(`On ${day}, we are open at ${open} and close at ${close}`);
+}
+
 /////////////////////////////////////////
 // Coding Challenge #1
-
 /* 
 We're building a football betting app (soccer for my American friends 😅)!
 
@@ -148,6 +189,70 @@ Suppose we get data from a web service about a certain game (below). In this cha
 7. The team with the lower odd is more likely to win. Print to the console which team is more likely to win, WITHOUT using an if/else statement or the ternary operator.
 
 TEST DATA FOR 6: Use players 'Davies', 'Muller', 'Lewandowski' and 'Kimmich'. Then, call the function again with players from game.scored
+
+GOOD LUCK 😀
+*/
+
+/* === Solutions ===
+// 1.
+const [players1, players2] = game.players;
+console.log(players1);
+console.log(players2);
+
+// 2.
+const [gk, ...fieldPlayers] = players1;
+console.log(gk, fieldPlayers);
+
+// 3.
+const allPlayers = [...players1, ...players2];
+console.log(allPlayers);
+
+// 4.
+const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
+console.log(players1Final);
+
+// 5.
+// const { team1, x: draw, team2 } = game.odds;
+// console.log(team1, draw, team2);
+
+const {
+  odds: { team1, x: draw, team2 },
+} = game;
+console.log(team1, draw, team2);
+
+// 6.
+const printGoals = (...players) => {
+  console.log(players);
+  console.log(`${players.length} were scored!`);
+};
+
+printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
+printGoals(...game.scored);
+
+// 7.
+team1 < team2 && console.log('Team 1 is more likely to win.');
+team1 > team2 && console.log('Team 2 is more likely to win.');
+*/
+
+/////////////////////////////////////////
+// Coding Challenge #2
+/* 
+Let's continue with our football betting app!
+
+1. Loop over the game.scored array and print each player name to the console, along with the goal number (Example: "Goal 1: Lewandowski")
+2. Use a loop to calculate the average odd and log it to the console (We already studied how to calculate averages, you can go check if you don't remember)
+3. Print the 3 odds to the console, but in a nice formatted way, exaclty like this:
+      Odd of victory Bayern Munich: 1.33
+      Odd of draw: 3.25
+      Odd of victory Borrussia Dortmund: 6.5
+Get the team names directly from the game object, don't hardcode them (except for "draw"). HINT: Note how the odds and the game objects have the same property names 😉
+
+BONUS: Create an object called 'scorers' which contains the names of the players who scored as properties, and the number of goals as the value. In this game, it will look like this:
+      {
+        Gnarby: 1,
+        Hummels: 1,
+        Lewandowski: 2
+      }
 
 GOOD LUCK 😀
 */
@@ -194,40 +299,39 @@ const game = {
 };
 
 // 1.
-const [players1, players2] = game.players;
-console.log(players1);
-console.log(players2);
+for (const [i, player] of game.scored.entries()) {
+  console.log(`Goal ${i + 1}: ${player}`);
+}
 
 // 2.
-const [gk, ...fieldPlayers] = players1;
-console.log(gk, fieldPlayers);
+const oddsArr = Object.values(game.odds);
+let sum = 0;
+for (const odd of oddsArr) sum += odd;
+const oddAve = sum / oddsArr.length;
+console.log(oddAve);
 
 // 3.
-const allPlayers = [...players1, ...players2];
-console.log(allPlayers);
+const oddsEnt = Object.entries(game.odds);
+console.log(oddsEnt);
+for (const [team, odd] of oddsEnt) {
+  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`
+  const str = `Odd of ${teamStr}: ${odd}`
+  console.log(str);
+}
 
-// 4.
-const players1Final = [...players1, 'Thiago', 'Coutinho', 'Perisic'];
-console.log(players1Final);
+// Odd of victory Bayern Munich: 1.33
+// Odd of draw: 3.25
+// Odd of victory Borrussia Dortmund: 6.5
 
-// 5.
-// const { team1, x: draw, team2 } = game.odds;
-// console.log(team1, draw, team2);
-
-const {
-  odds: { team1, x: draw, team2 },
-} = game;
-console.log(team1, draw, team2);
-
-// 6.
-const printGoals = (...players) => {
-  console.log(players);
-  console.log(`${players.length} were scored!`);
+// BONUS
+const scorers = {};
+for (const player of game.scored) {
+  scorers[player] ? scorers[player]++ : (scorers[player] = 1)
 };
-
-printGoals('Davies', 'Muller', 'Lewandowski', 'Kimmich');
-printGoals(...game.scored);
-
-// 7.
-team1 < team2 && console.log('Team 1 is more likely to win.');
-team1 > team2 && console.log('Team 2 is more likely to win.');
+console.log(scorers);
+ 
+// {
+//   Gnarby: 1,
+//   Hummels: 1,
+//   Lewandowski: 2
+// }
