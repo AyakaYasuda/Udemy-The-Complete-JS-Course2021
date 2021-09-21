@@ -173,6 +173,65 @@ for (const [day, { open, close }] of entries) {
   console.log(`On ${day}, we are open at ${open} and close at ${close}`);
 }
 
+// Sets
+const staff = ['waiter', 'chef', 'waiter', 'manager', 'chef', 'waiter'];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+
+// Maps
+const rest = new Map();
+rest
+.set('name', 'Classico Italiano')
+.set(1,'Firenze, Italy')
+.set(2, 'Lisbon, Portugal')
+.set('open', 11)
+.set('close', 23)
+.set(true, 'We are open')
+.set(false, 'We are closed')
+console.log(rest);
+
+console.log(rest.get('name'));
+console.log(rest.get(1));
+console.log(rest.get(true));
+
+const time = 21;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+console.log(rest.has('name'));
+const arr = [1,2]
+rest.set(arr, 'Test')
+console.log(rest.size);
+console.log(rest.get(arr));
+
+// Quiz App
+const question = new Map([
+  ['question','What is the best programming language in the world?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct!'],
+  [false, 'Try again...']
+]);
+console.log(question);
+
+console.log(question.get('question'));
+for (const [key, value] of question) {
+  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`)
+}
+
+// const answer = Number(prompt('Your Answer'));
+const yourAnswer = 3;
+console.log(question.get(yourAnswer === question.get('correct')));
+
+// convert map to array
+console.log([...question]);
+// console.log(question.entries());
+console.log([...question.keys()]);
+console.log([...question.values()]);
+
+
+
 /////////////////////////////////////////
 // Coding Challenge #1
 /* 
@@ -257,6 +316,7 @@ BONUS: Create an object called 'scorers' which contains the names of the players
 GOOD LUCK 😀
 */
 
+/* === Solutions === */
 const game = {
   team1: 'Bayern Munich',
   team2: 'Borrussia Dortmund',
@@ -335,3 +395,58 @@ console.log(scorers);
 //   Hummels: 1,
 //   Lewandowski: 2
 // }
+
+
+/////////////////////////////////////////
+// Coding Challenge #3
+/* 
+Let's continue with our football betting app! This time, we have a map with a log of the events that happened during the game. The values are the events themselves, and the keys are the minutes in which each event happened (a football game has 90 minutes plus some extra time).
+
+1. Create an array 'events' of the different game events that happened (no duplicates)
+2. After the game has finished, is was found that the yellow card from minute 64 was unfair. So remove this event from the game events log.
+3. Print the following string to the console: "An event happened, on average, every 9 minutes" (keep in mind that a game has 90 minutes)
+4. Loop over the events and log them to the console, marking whether it's in the first half or second half (after 45 min) of the game, like this:
+      [FIRST HALF] 17: ⚽️ GOAL
+
+GOOD LUCK 😀
+*/
+
+const gameEvents = new Map([
+  [17, '⚽️ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽️ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽️ GOAL'],
+  [80, '⚽️ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+/*
+/* === Solutions === */
+// 1.
+const events = [...new Set(gameEvents.values())];
+console.log(events);
+
+// 2.
+gameEvents.delete(64);
+console.log(gameEvents);
+
+// 3.
+console.log(`An event happened, on average, every ${90 / gameEvents.size} minutes`)
+
+const lastItem = [...gameEvents.keys()].pop();
+console.log(lastItem);
+
+console.log(`An event happened, on average, every ${lastItem / gameEvents.size} minutes`)
+
+
+// 4.
+console.log(gameEvents)
+for (const [minute, event] of gameEvents) {
+  const str = minute < 45 ? '[FIRST HALF]' : '[SECOND HALF]';
+  console.log(`${str} ${minute}: ${event}`)
+}
