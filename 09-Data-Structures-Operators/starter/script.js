@@ -181,13 +181,13 @@ console.log(staffUnique);
 // Maps
 const rest = new Map();
 rest
-.set('name', 'Classico Italiano')
-.set(1,'Firenze, Italy')
-.set(2, 'Lisbon, Portugal')
-.set('open', 11)
-.set('close', 23)
-.set(true, 'We are open')
-.set(false, 'We are closed')
+  .set('name', 'Classico Italiano')
+  .set(1, 'Firenze, Italy')
+  .set(2, 'Lisbon, Portugal')
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open')
+  .set(false, 'We are closed');
 console.log(rest);
 
 console.log(rest.get('name'));
@@ -198,26 +198,26 @@ const time = 21;
 console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
 
 console.log(rest.has('name'));
-const arr = [1,2]
-rest.set(arr, 'Test')
+const arr = [1, 2];
+rest.set(arr, 'Test');
 console.log(rest.size);
 console.log(rest.get(arr));
 
 // Quiz App
 const question = new Map([
-  ['question','What is the best programming language in the world?'],
+  ['question', 'What is the best programming language in the world?'],
   [1, 'C'],
   [2, 'Java'],
   [3, 'JavaScript'],
   ['correct', 3],
   [true, 'Correct!'],
-  [false, 'Try again...']
+  [false, 'Try again...'],
 ]);
 console.log(question);
 
 console.log(question.get('question'));
 for (const [key, value] of question) {
-  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`)
+  if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
 }
 
 // const answer = Number(prompt('Your Answer'));
@@ -230,7 +230,98 @@ console.log([...question]);
 console.log([...question.keys()]);
 console.log([...question.values()]);
 
+/*
+Working With Strings
+*/
 
+const checkMiddleSeat = seat => {
+  const lastLetter = seat.slice(-1);
+  if (lastLetter === 'B' || lastLetter === 'E') {
+    console.log(`Your seat : ${seat} >> You've got the middle seat`);
+  } else {
+    console.log(`Your seat : ${seat} >> You are lucky!`);
+  }
+};
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('8E');
+
+// fix the capitalization in name
+const passenger = 'JoNAs';
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+// comparing the email
+const email = 'hello@jonas.com';
+const loginEmail = ' Hello@Jonas.com \n';
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(email === normalizedEmail);
+
+// replacing
+const announcement =
+  'All passengers come to boarding door 23, Bording door 23!';
+
+console.log(announcement.replace('door', 'gate'));
+console.log(announcement.replace(/door/g, 'gate'));
+
+// return boolean
+const plane = 'Airbus A320neo';
+console.log(plane.includes('Air'));
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log("It's a part of the new Airbus Family");
+}
+
+const checkBaggege = function (items) {
+  const baggege = items.toLowerCase();
+  if (baggege.includes('knife') || baggege.includes('gun')) {
+    console.log('You are NOT allowed board.');
+  } else {
+    console.log('You are welcome aboard!');
+  }
+};
+checkBaggege('I have a laptop, some Foods and a pocket Knife.');
+checkBaggege('Socks and camera');
+checkBaggege("I've got some snacks and a gun for protection.");
+
+// split and join
+const [firstName, lastName] = 'Jonas Schmedttmann'.split(' ');
+console.log(firstName, lastName);
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+console.log(newName);
+
+// capitalize name
+const capitalizeName = function (name) {
+  const nameArr = name.split(' ');
+  console.log(nameArr);
+
+  let newNameArr = [];
+  let newNameArrUpper = [];
+  for (const item of nameArr) {
+    // newNameArr.push(item[0].toUpperCase() + item.slice(1));
+    newNameArrUpper.push(item.replace(item[0], item[0].toUpperCase()));
+  }
+  console.log(newNameArrUpper.join(' '));
+};
+capitalizeName('jessica ann smith davis');
+capitalizeName('ayaka yasuda');
+
+// padding
+const maskCreditCard = function (number) {
+  const str = number + ''; // to change number into a string
+  const last = str.slice(-4);
+  return last.padStart(str.length, '*');
+};
+console.log(maskCreditCard(4788162293668477));
+
+// repeat
+const planesInLine = function (n) {
+  console.log(`There are ${n} airplanes in line ${'🛩'.repeat(n)}`);
+};
+planesInLine(3);
+planesInLine(5);
 
 /////////////////////////////////////////
 // Coding Challenge #1
@@ -374,8 +465,8 @@ console.log(oddAve);
 const oddsEnt = Object.entries(game.odds);
 console.log(oddsEnt);
 for (const [team, odd] of oddsEnt) {
-  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`
-  const str = `Odd of ${teamStr}: ${odd}`
+  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`;
+  const str = `Odd of ${teamStr}: ${odd}`;
   console.log(str);
 }
 
@@ -386,16 +477,15 @@ for (const [team, odd] of oddsEnt) {
 // BONUS
 const scorers = {};
 for (const player of game.scored) {
-  scorers[player] ? scorers[player]++ : (scorers[player] = 1)
-};
+  scorers[player] ? scorers[player]++ : (scorers[player] = 1);
+}
 console.log(scorers);
- 
+
 // {
 //   Gnarby: 1,
 //   Hummels: 1,
 //   Lewandowski: 2
 // }
-
 
 /////////////////////////////////////////
 // Coding Challenge #3
@@ -436,17 +526,70 @@ gameEvents.delete(64);
 console.log(gameEvents);
 
 // 3.
-console.log(`An event happened, on average, every ${90 / gameEvents.size} minutes`)
+console.log(
+  `An event happened, on average, every ${90 / gameEvents.size} minutes`
+);
 
 const lastItem = [...gameEvents.keys()].pop();
 console.log(lastItem);
 
-console.log(`An event happened, on average, every ${lastItem / gameEvents.size} minutes`)
-
+console.log(
+  `An event happened, on average, every ${lastItem / gameEvents.size} minutes`
+);
 
 // 4.
-console.log(gameEvents)
+console.log(gameEvents);
 for (const [minute, event] of gameEvents) {
   const str = minute < 45 ? '[FIRST HALF]' : '[SECOND HALF]';
-  console.log(`${str} ${minute}: ${event}`)
+  console.log(`${str} ${minute}: ${event}`);
 }
+
+///////////////////////////////////////
+// Coding Challenge #4
+
+/* 
+Write a program that receives a list of variable names written in underscore_case and convert them to camelCase.
+
+The input will come from a textarea inserted into the DOM (see code below), and conversion will happen when the button is pressed.
+
+THIS TEST DATA (pasted to textarea)
+underscore_case
+ first_name
+Some_Variable 
+  calculate_AGE
+delayed_departure
+
+SHOULD PRODUCE THIS OUTPUT (5 separate console.log outputs)
+underscoreCase      ✅
+firstName           ✅✅
+someVariable        ✅✅✅
+calculateAge        ✅✅✅✅
+delayedDeparture    ✅✅✅✅✅
+
+HINT 1: Remember which character defines a new line in the textarea 😉
+HINT 2: The solution only needs to work for a variable made out of 2 words, like a_b
+HINT 3: Start without worrying about the ✅. Tackle that only after you have the variable name conversion working 😉
+HINT 4: This challenge is difficult on purpose, so start watching the solution in case you're stuck. Then pause and continue!
+
+Afterwards, test with your own test data!
+
+GOOD LUCK 😀
+*/
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+document.querySelector('button').addEventListener('click', () => {
+  const text = document.querySelector('textarea').value;
+  const rows = text.split('\n');
+
+  for (const [i, row] of rows.entries()) {
+    const [first, second] = row.toLowerCase().trim().split('_');
+
+    const output = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )}`;
+    console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`);
+  }
+});
