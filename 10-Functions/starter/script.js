@@ -158,6 +158,39 @@ const addTaxRate = rate => {
 const addVAT2 = addTaxRate(0.23);
 console.log(addVAT2(100));
 
+// Immediately Invoked Function Expressions (IIFE)
+const runOnce = function () {
+  console.log('This will never run again.');
+};
+/* 
+IIFE #1 function declaration
+*/
+(function () {
+  console.log('This will never run again.');
+})();
+/* 
+IIFE #2 arrow function
+*/
+(() => console.log('This will never run again.'))();
+
+
+// Closure
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function (){
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  }
+}
+
+const booker = secureBooking();
+booker();
+booker();
+booker();
+console.dir(booker);
+
+
 ///////////////////////////////////////
 // Coding Challenge #1
 
