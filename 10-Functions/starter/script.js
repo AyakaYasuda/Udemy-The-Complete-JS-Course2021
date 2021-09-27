@@ -173,23 +173,42 @@ IIFE #2 arrow function
 */
 (() => console.log('This will never run again.'))();
 
-
 // Closure
 const secureBooking = function () {
   let passengerCount = 0;
 
-  return function (){
+  return function () {
     passengerCount++;
     console.log(`${passengerCount} passengers`);
-  }
-}
+  };
+};
 
+// closure example #1
 const booker = secureBooking();
 booker();
 booker();
 booker();
 console.dir(booker);
 
+let f;
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+g();
+f();
+console.dir(f);
+h();
+f();
+console.dir(f);
 
 ///////////////////////////////////////
 // Coding Challenge #1
