@@ -291,3 +291,35 @@ document
 poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
 const desplayTest = poll.displayResults.bind({ answers: [1, 5, 3, 9, 6, 1] });
 desplayTest('array');
+
+
+///////////////////////////////////////
+// Coding Challenge #2
+
+/* 
+This is more of a thinking challenge than a coding challenge 🤓
+
+Take the IIFE below and at the end of the function, attach an event listener that changes the color of the selected h1 element ('header') to blue, each time the BODY element is clicked. Do NOT select the h1 element again!
+
+And now explain to YOURSELF (or someone around you) WHY this worked! Take all the time you need. Think about WHEN exactly the callback function is executed, and what that means for the variables involved in this example.
+
+GOOD LUCK 😀
+*/
+
+(function () {
+  const header = document.querySelector('h1');
+  header.style.color = 'red';
+
+  document.querySelector('body').addEventListener('click', function () {
+    header.style.color = 'blue';
+  });
+})();
+
+/*
+=== Answer ===
+
+When the IIFE happens (when the browser is reloaded), the variable called header is created and the font color is changed into red by style color method. The callback function is not excuted this time.
+
+When the body element is clicked, the call back function runs and the color changes into blue. Because of the closure happening behind the scene, the callback function remembers the header variable even after the excusion context of the parent has gone. That's why the callback function can get access to the header variable. 
+
+*/
