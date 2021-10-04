@@ -94,6 +94,12 @@ const createUserName = function (account) {
 createUserName(accounts);
 console.log(accounts);
 
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+calcDisplayBalance(account1.movements);
+
 /*
 check the defference between innerHTML and textContent
 console.log(containerMovements.innerHTML);
