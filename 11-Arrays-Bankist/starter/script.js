@@ -61,6 +61,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// Functions
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
 
@@ -70,15 +71,28 @@ const displayMovements = function (movements) {
     const html = `
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${
-      i + 1} ${type}</div>
+      i + 1
+    } ${type}</div>
       <div class="movements__value">${mov}</div>
     </div>
     `;
-    
+
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
 displayMovements(account1.movements);
+
+const createUserName = function (account) {
+  account.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+createUserName(accounts);
+console.log(accounts);
 
 /*
 check the defference between innerHTML and textContent
