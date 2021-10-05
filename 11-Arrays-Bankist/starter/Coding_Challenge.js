@@ -98,3 +98,27 @@ const calcAverageHumanAge = function (ages) {
 const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 console.log(avg1, avg2);
+
+///////////////////////////////////////
+// Coding Challenge #3
+
+/* 
+Rewrite the 'calcAverageHumanAge' function from the previous challenge, but this time as an arrow function, and using chaining!
+
+TEST DATA 1: [5, 2, 4, 1, 15, 8, 3]
+TEST DATA 2: [16, 6, 10, 5, 6, 1, 4]
+
+GOOD LUCK 😀
+*/
+
+const calcAverageHumanAge2 = ages => {
+  const average = ages
+    .map(dogAge => (dogAge <= 2 ? dogAge * 2 : 16 + dogAge * 4))
+    .filter((humanAge) => humanAge > 18)
+    .reduce((acc, humanAge, i, arr) => acc + humanAge / arr.length, 0);
+  return average;
+};
+
+const avg3 = calcAverageHumanAge2([5, 2, 4, 1, 15, 8, 3]);
+const avg4 = calcAverageHumanAge2([16, 6, 10, 5, 6, 1, 4]);
+console.log(avg3, avg4);
