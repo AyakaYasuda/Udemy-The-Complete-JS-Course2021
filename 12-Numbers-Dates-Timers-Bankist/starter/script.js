@@ -90,12 +90,10 @@ const displayMovements = function (movements, sort = false) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
-      <div class="movements__row">
-        <div class="movements__type movements__type--${type}">${
-      i + 1
-    } ${type}</div>
-        <div class="movements__value">${mov.toFixed(2)}€</div>
-      </div>
+    <div class="movements__row">
+    <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+    <div class="movements__value">${mov.toFixed(2)}€</div>
+    </div>
     `;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -248,6 +246,15 @@ btnSort.addEventListener('click', function (e) {
   sorted = !sorted;
 });
 
+labelBalance.addEventListener('click', function () {
+  [...document.querySelectorAll('.movements__row')].forEach(function (row, i) {
+    // 0, 2, 4, 6
+    if (i % 2 === 0) row.style.backgroundColor = 'orangered';
+    // 0, 3, 6, 9
+    if (i % 3 === 0) row.style.backgroundColor = 'blue';
+  });
+});
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -273,3 +280,31 @@ console.log(Number.isFinite('23')); // false
 
 console.log(Number.isInteger(23)); // true
 console.log(Number.isInteger(23.0)); // true
+
+/*
+Understanding BigInt
+*/
+// maximum number that JavaScript represent
+console.log(2 ** 53 - 1);
+console.log(Number.MAX_SAFE_INTEGER);
+
+// when you want to deal with even bigger number
+console.log(267468575536618794090646759879201947856n);
+console.log(BigInt(267468575536));
+
+// Operations
+console.log(10000n + 10000n);
+console.log(3671827964758526435879029747521n * 10000n);
+
+const huge = 3871577398509386275496n;
+const num = 23;
+console.log(huge * BigInt(num));
+
+// Exceptions
+console.log(20n === 20); // false
+console.log(20n == 20); // true
+console.log(huge + ' is a really big number');
+
+// Devisions
+console.log(14n / 3n); // decimal part is removed
+console.log(14 / 3);
