@@ -251,3 +251,25 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+// Conversion from string to number
+console.log(Number('23'));
+console.log(+'23');
+
+// Parsing
+console.log(Number.parseInt('30px', 10)); // 30
+console.log(Number.parseInt('2.5rem', 10)); // 2
+console.log(Number.parseFloat('2.5rem', 10)); // 2.5
+
+// Checking if value is not a number = value is NaN
+console.log(Number.isNaN(23)); // false
+console.log(Number.isNaN('23')); // false
+console.log(Number.isNaN(+'20x')); // true
+
+// Checking if value is number
+console.log(Number.isFinite(23)); // true
+console.log(Number.isFinite(23 / 0)); // false
+console.log(Number.isFinite('23')); // false
+
+console.log(Number.isInteger(23)); // true
+console.log(Number.isInteger(23.0)); // true
