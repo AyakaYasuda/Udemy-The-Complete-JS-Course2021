@@ -308,3 +308,39 @@ console.log(huge + ' is a really big number');
 // Devisions
 console.log(14n / 3n); // decimal part is removed
 console.log(14 / 3);
+
+/*
+Create a data
+*/
+// const now = new Date();
+// console.log(now);
+
+// console.log(new Date('Oct 11 2021 00:24:26'));
+// console.log(new Date('December 24, 2021'));
+// console.log(new Date(account1.movementsDates[0]));
+// console.log(new Date(2037, 10, 19, 15, 23, 5)); // Nov as JS is 0 based
+// console.log(new Date(2037, 10, 33)); // Dec 3 as the last day of Nov is 30th
+
+// console.log(new Date(0));
+// console.log(new Date(3 * 24 * 60 * 60 * 1000));
+
+// working with dates
+const future = new Date(2037, 10, 19, 15, 23);
+console.log(future);
+console.log(future.getFullYear());
+console.log(future.getMonth());
+console.log(future.getDate());
+console.log(future.getDay()); // return the day -> 0: Sun, 1: Mon, 2: Tue, 3: Wed, 4: Thu, 5: Fri, 6: Sat
+console.log(future.getHours()); 
+console.log(future.getMinutes()); 
+console.log(future.getSeconds()); 
+console.log(future.toISOString());
+console.log(future.getTime());
+console.log(new Date(2142285780000));
+
+// fetch the current time
+console.log(Date.now());
+
+// specify the year
+future.setFullYear(2040);
+console.log(future);
