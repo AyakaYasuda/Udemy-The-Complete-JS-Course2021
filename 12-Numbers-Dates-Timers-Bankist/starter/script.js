@@ -185,9 +185,32 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+const startLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.floor(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    // in each call, print the remaining time to UI
+    labelTimer.textContent = `${min}:${sec}`;
+    // when 0 seconds, stop the timer and log out the user
+    if (time === 0) {
+      clearInterval(timer);
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+    // decrease 1s
+    time--;
+  };
+  // set time to 5 minutes
+  let time = 300;
+  // call the timer every seconds
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
 ///////////////////////////////////////
 // Event handlers
-let currentAccount;
+let currentAccount, timer;
 
 // FAKE ALWAYS LOGGED IN
 // currentAccount = account1;
@@ -254,6 +277,10 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
+    // Timer
+    if (timer) clearInterval(timer);
+    timer = startLogOutTimer();
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -283,6 +310,10 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // reset the timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
@@ -292,16 +323,20 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    setTimeout(function() {
+    setTimeout(function () {
       // Add movement
       currentAccount.movements.push(amount);
-  
+
       // Add loan date
       currentAccount.movementsDates.push(new Date().toISOString());
-  
+
       // Update UI
       updateUI(currentAccount);
-    }, 2500)
+
+      // reset the timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
+    }, 2500);
   }
   inputLoanAmount.value = '';
 });
