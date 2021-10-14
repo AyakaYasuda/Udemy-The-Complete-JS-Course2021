@@ -30,6 +30,41 @@ document.addEventListener('keydown', function (e) {
 });
 
 ///////////////////////////////////////
+// Smooth Scrolling
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+
+  console.log(e.target.getBoundingClientRect());
+
+  console.log('current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+
+  console.log(
+    'height/width viewpoint',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  // Scrolling
+  // window.scrollTo(
+  //   s1coords.left + window.pageXOffset,
+  //   s1coords.top + window.pageYOffset
+  // );
+
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+///////////////////////////////////////
 ///////////////////////////////////////
 ///////////////////////////////////////
 
@@ -99,12 +134,12 @@ const logo = document.querySelector('.nav__logo');
 console.log(logo.alt);
 console.log(logo.className);
 
-logo.alt = 'Beautiful minimarist logo'
+logo.alt = 'Beautiful minimarist logo';
 
 // Non-standard property
 console.log(logo.designer);
 console.log(logo.getAttribute('designer'));
-logo.setAttribute('company', 'Bankist')
+logo.setAttribute('company', 'Bankist');
 
 console.log(logo.src);
 console.log(logo.getAttribute('src'));
@@ -125,4 +160,4 @@ logo.classList.toggle('c');
 logo.classList.contains('c'); // not includes
 
 // DON'T USE THIS!
-logo.className = 'jonas'
+logo.className = 'jonas';
