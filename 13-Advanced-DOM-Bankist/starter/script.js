@@ -495,3 +495,22 @@ console.log(h1.parentElement.children);
   if(el !== h1) el.style.transform = 'scale(0.5)'
 })
 */
+
+/*
+Lifecycle
+*/
+
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM tree is built', e);
+});
+
+window.addEventListener('load', function (e) {
+  console.log('The page fully loaded', e);
+});
+
+// Pop up message when the user leaves
+// window.addEventListener('beforeunload', function(e) {
+//   e.preventDefault();
+//   console.log(e);
+//   e.returnValue = '';
+// })
