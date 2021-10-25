@@ -192,7 +192,7 @@ sarah.init('Sarah', 1979);
 sarah.calcAge();
 
 //////////////////////////////////////////////
-// Inheritance between classes constructor functions
+// Inheritance between classes: Constructor functions
 
 // const Person = function (firstName, birthYear) {
 //   this.firstName = firstName;
@@ -220,11 +220,137 @@ console.log(mike);
 mike.introduce();
 mike.calcAge();
 
-console.log(mike.__proto__); 
-console.log(mike.__proto__.__proto__); 
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
 
 console.log(mike instanceof Student); // -> true
 console.log(mike instanceof Person); // => true
 
 Student.prototype.constructor = Student;
 console.dir(Student.prototype.constructor);
+
+//////////////////////////////////////////////
+// Inheritance between classes: ES6 classes
+
+// class PersonCl {
+//     constructor(fullName, birthYear) {
+//       this.fullName = fullName;
+//       this.birthYear = birthYear;
+//     }
+
+//     // Instance methods
+//     // Methods will be added to .prototype property
+//     calcAge() {
+//       console.log(2037 - this.birthYear);
+//     }
+
+//     greet() {
+//       console.log(`Hey ${this.fullName}`);
+//     }
+
+//     get age() {
+//       return 2037 - this.birthYear;
+//     }
+// }
+
+class StudentCl extends PersonCl {
+  constructor(fullName, birthYear, course) {
+    // Always needs to happen first!
+    super(fullName, birthYear);
+    this, (course = course);
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName} and I study ${this.course}`);
+  }
+
+  calcAge() {
+    console.log(
+      `I'm ${
+        2037 - this.birthYear
+      } years old, but as a student I fell more like ${
+        2037 - this.birthYear + 10
+      }`
+    );
+  }
+}
+
+const martha = new StudentCl('Martha Jones', 2012, 'Computer Science');
+martha.introduce();
+martha.calcAge();
+
+//////////////////////////////////////////////
+// Inheritance between classes: Object.create
+
+// const PersonProto = {
+//     calcAge() {
+//       console.log(2037 - this.birthYear);
+//     },
+
+//     init(firstName, birthYear) {
+//       this.firstName = firstName;
+//       this.birthYear = birthYear;
+//     },
+//   };
+
+//   const steven = Object.create(PersonProto);
+
+const StudentProto = Object.create(PersonProto);
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const jay = Object.create(StudentProto);
+jay.init('Jay', 2010, 'Computer Science');
+jay.introduce();
+jay.calcAge();
+
+//////////////////////////////////////////////
+// Another class examples
+
+class Account {
+  constructor(owner, currency, pin, movements) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+
+  deposit(val) {
+    this.movements.push(val);
+  }
+
+  withdraw(val) {
+    this.deposit(-val);
+  }
+
+  approveLoan(val) {
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this.approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan Approved`);
+    }
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+console.log(acc1);
+
+// acc1.movements.push(250);
+// acc1.movements.push(-150);
+acc1.deposit(250);
+acc1.withdraw(150);
+acc1.requestLoan(1000);
+acc1.approveLoan(1000);
+console.log(acc1);
